@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:fazztrack_batch1/main.dart';
 
 void main() {
@@ -25,6 +24,8 @@ void main() {
     }
   }
 
+  //2 6 5 3
+  //2 6 5 3
   perulangan([2, 6, 5, 3]);
 
   //task 2
@@ -41,4 +42,11 @@ void main() {
 
   isPalindrome("syifa");
   isPalindrome("ini");
+
+  palindrome(String inputanValue) {
+    for (var i = 0; i < inputanValue.length; i++) {
+      var firstIndex = i;
+      var lastIndex = print("");
+    }
+  }
 }
