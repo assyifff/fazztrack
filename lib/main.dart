@@ -1,7 +1,11 @@
+import 'package:fazztrack_batch1/UI/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'MyHomePage.dart';
-import 'SecondPage.dart';
+import 'package:get/get.dart';
+import 'UI/view/MyHomePage.dart';
+import 'UI/view/SecondPage.dart';
+import 'UI/view/login.dart';
+import 'UI/view/signup.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -18,9 +22,17 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      theme: ThemeData(fontFamily: "NunitoSans"),
+      // home: login(),
+      initialRoute: '/',
+      routes: {
+        "/": (context) => login(),
+        "/homePage": (context) => MyHomePage(),
+        "/secondPage": (context) => SecondPage(),
+        "/signIn": (context) => signUp(),
+      },
     );
   }
 }

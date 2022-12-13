@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:fazztrack_batch1/MyHomePage.dart';
+import 'MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
