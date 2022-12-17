@@ -1,3 +1,4 @@
+import 'package:fazztrack_batch1/UI/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -5,7 +6,7 @@ import 'package:get/get.dart';
 import '../viewModel/userViewModel.dart';
 
 class signUp extends StatefulWidget {
-  const signUp({Key? key}) : super(key: key);
+  const signUp({Key key}) : super(key: key);
 
   @override
   State<signUp> createState() => _signUpState();
@@ -13,12 +14,6 @@ class signUp extends StatefulWidget {
 
 class _signUpState extends State<signUp> {
   UserViewModel viewModel = Get.put(UserViewModel());
-
-  @override
-  void initState() {
-    viewModel.postDataToApi();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +137,7 @@ class _signUpState extends State<signUp> {
                       builder: (modelView) {
                         return ElevatedButton(
                           onPressed: () {
-                            Get.offNamed("/");
+                            Get.off(login());
                           },
                           child: Text(
                             "Sign Up",

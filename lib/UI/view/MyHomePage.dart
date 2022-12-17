@@ -9,21 +9,15 @@ import 'package:get/get.dart';
 import 'SecondPage.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final UserViewModel viewModel;
+  const MyHomePage({Key key, this.viewModel}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var tampungPageDua = "50.000";
   UserViewModel viewModel = Get.put(UserViewModel());
-
-  @override
-  void initState() {
-    viewModel.getDataFromApi();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: modelView.setData.length,
+                        itemCount: modelView.user.length,
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {},
@@ -63,7 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                               Colors.white),
                                     ),
                                     onPressed: () {
-                                      Get.toNamed('/secondPage');
+                                      modelView
+                                          .setUser(modelView.user[index].name);
+                                      Get.to(SecondPage(viewModel: modelView));
                                     },
                                     child: Row(
                                         mainAxisAlignment:
@@ -88,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   width: 150,
                                                   height: 22,
                                                   child: Text(
-                                                    "${modelView.setData[index]['name']}",
+                                                    "${modelView.user[index].name}",
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       color: Color(0xFF4D4B57),
@@ -112,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           Container(
                                             margin: EdgeInsets.only(right: 10),
                                             child: Text(
-                                              "${modelView.setData[index]['id'].toString()}",
+                                              "${modelView.user[index].id.toString()}",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Color(0xFF1EC15F),
@@ -376,327 +372,3 @@ Widget transaction() {
     ],
   );
 }
-
-// Column(
-//   crossAxisAlignment: CrossAxisAlignment.center,
-//   children: [
-//     Container(
-//       margin: EdgeInsets.only(top: 20),
-//       color: Colors.white,
-//       width: 375,
-//       height: 96,
-//       child: ElevatedButton(
-//         onPressed: () async {
-//           var result = await Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) => SecondPage(),
-//             ),
-//           );
-//           setState(() {
-//             tampungPageDua = result;
-//           });
-//         },
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: [
-//             Container(
-//               margin: EdgeInsets.only(left: 10),
-//               width: 56,
-//               height: 56,
-//               child: Image(
-//                 image: AssetImage(
-//                   "images/1.png",
-//                 ),
-//               ),
-//             ),
-//             Container(
-//               child: Column(
-//                 children: [
-//                   Container(
-//                     margin: EdgeInsets.only(
-//                       right: 100,
-//                       top: 25,
-//                     ),
-//                     width: 92,
-//                     height: 22,
-//                     child: Text(
-//                       "Samuel Suhi",
-//                       style: TextStyle(
-//                         fontFamily: "NunitoSans",
-//                         fontSize: 16,
-//                         color: Color(0xFF4D4B57),
-//                       ),
-//                     ),
-//                   ),
-//                   Container(
-//                     margin: EdgeInsets.only(
-//                       right: 139,
-//                       top: 8,
-//                     ),
-//                     width: 52,
-//                     height: 19,
-//                     child: Text(
-//                       "Transfer",
-//                       style: TextStyle(
-//                         fontFamily: "NunitoSans",
-//                         fontSize: 14,
-//                         color: Color(0xFF7A7886),
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//             Container(
-//               margin: EdgeInsets.only(right: 10),
-//               child: Text(
-//                 "+$tampungPageDua",
-//                 style: TextStyle(
-//                   fontFamily: "NunitoSans",
-//                   fontSize: 18,
-//                   color: Color(0xFF1EC15F),
-//                 ),
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     ),
-//   ],
-// ),
-// Column(
-//   crossAxisAlignment: CrossAxisAlignment.center,
-//   children: [
-//     Container(
-//       margin: EdgeInsets.only(top: 20),
-//       color: Colors.white,
-//       width: 375,
-//       height: 96,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Container(
-//             margin: EdgeInsets.only(left: 10),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.all(
-//                 Radius.circular(10),
-//               ),
-//               color: Color(0xFFEBEEF2),
-//             ),
-//             child: Image(
-//               fit: BoxFit.contain,
-//               image: AssetImage(
-//                 "images/spotify.png",
-//               ),
-//             ),
-//           ),
-//           Container(
-//             child: Column(
-//               children: [
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 100,
-//                     top: 25,
-//                   ),
-//                   width: 92,
-//                   height: 22,
-//                   child: Text(
-//                     "Spotify",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 18,
-//                       color: Color(0xFF4D4B57),
-//                     ),
-//                   ),
-//                 ),
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 112,
-//                     top: 8,
-//                   ),
-//                   width: 80,
-//                   height: 19,
-//                   child: Text(
-//                     "Subscription",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 14,
-//                       color: Color(0xFF7A7886),
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             margin: EdgeInsets.only(right: 10),
-//             child: Text(
-//               "-49.000",
-//               style: TextStyle(
-//                 fontFamily: "NunitoSans",
-//                 fontSize: 18,
-//                 color: Color(0xFFFF5B37),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   ],
-// ),
-// Column(
-//   crossAxisAlignment: CrossAxisAlignment.center,
-//   children: [
-//     Container(
-//       margin: EdgeInsets.only(top: 20),
-//       color: Colors.white,
-//       width: 375,
-//       height: 96,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Container(
-//             margin: EdgeInsets.only(left: 10),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.all(
-//                 Radius.circular(10),
-//               ),
-//               color: Color(0xFFEBEEF2),
-//             ),
-//             child: Image(
-//               fit: BoxFit.contain,
-//               image: AssetImage(
-//                 "images/netflix.png",
-//               ),
-//             ),
-//           ),
-//           Container(
-//             child: Column(
-//               children: [
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 85,
-//                     top: 25,
-//                   ),
-//                   width: 92,
-//                   height: 22,
-//                   child: Text(
-//                     "Netflix",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 18,
-//                       color: Color(0xFF4D4B57),
-//                     ),
-//                   ),
-//                 ),
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 96,
-//                     top: 8,
-//                   ),
-//                   width: 80,
-//                   height: 19,
-//                   child: Text(
-//                     "Subscription",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 14,
-//                       color: Color(0xFF7A7886),
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             margin: EdgeInsets.only(right: 10),
-//             child: Text(
-//               "-149.000",
-//               style: TextStyle(
-//                 fontFamily: "NunitoSans",
-//                 fontSize: 18,
-//                 color: Color(0xFFFF5B37),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   ],
-// ),
-// Column(
-//   crossAxisAlignment: CrossAxisAlignment.center,
-//   children: [
-//     Container(
-//       margin: EdgeInsets.only(top: 20),
-//       color: Colors.white,
-//       width: 375,
-//       height: 96,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Container(
-//             margin: EdgeInsets.only(left: 10),
-//             width: 56,
-//             height: 56,
-//             child: Image(
-//               image: AssetImage(
-//                 "images/1-1.png",
-//               ),
-//             ),
-//           ),
-//           Container(
-//             child: Column(
-//               children: [
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 40,
-//                     top: 25,
-//                   ),
-//                   width: 120,
-//                   height: 22,
-//                   child: Text(
-//                     "Bobi Sammy",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 18,
-//                       color: Color(0xFF4D4B57),
-//                     ),
-//                   ),
-//                 ),
-//                 Container(
-//                   margin: EdgeInsets.only(
-//                     right: 105,
-//                     top: 8,
-//                   ),
-//                   width: 52,
-//                   height: 19,
-//                   child: Text(
-//                     "Transfer",
-//                     style: TextStyle(
-//                       fontFamily: "NunitoSans",
-//                       fontSize: 14,
-//                       color: Color(0xFF7A7886),
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             margin: EdgeInsets.only(right: 10),
-//             child: Text(
-//               "+1.150.000",
-//               style: TextStyle(
-//                 fontFamily: "NunitoSans",
-//                 fontSize: 18,
-//                 color: Color(0xFF1EC15F),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   ],
-// )

@@ -19,20 +19,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "NunitoSans"),
-      // home: login(),
-      initialRoute: '/',
-      routes: {
-        "/": (context) => login(),
-        "/homePage": (context) => MyHomePage(),
-        "/secondPage": (context) => SecondPage(),
-        "/signIn": (context) => signUp(),
-      },
+      home: login(),
+      // initialRoute: '/',
+      // routes: {
+      //   "/": (context) => login(),
+      //   "/homePage": (context) => MyHomePage(),
+      //   "/secondPage": (context) => SecondPage(),
+      //   "/signIn": (context) => signUp(),
+      // },
     );
   }
 }

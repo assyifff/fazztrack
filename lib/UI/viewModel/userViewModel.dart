@@ -1,38 +1,62 @@
 import 'package:dio/dio.dart';
+import 'package:fazztrack_batch1/UI/view/MyHomePage.dart';
+import 'package:fazztrack_batch1/UI/view/login.dart';
+import 'package:fazztrack_batch1/core/model/userModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../core/service/userService.dart';
 
 class UserViewModel extends GetxController {
-  String inputUsernameFromReactive = "";
-  String inputPasswordFromReactive = "";
-
-  handleInputUsername(String value) {
-    inputUsernameFromReactive = value;
-    update();
-  }
-
-  handleInputPassword(String value) {
-    inputPasswordFromReactive = value;
-    update();
-  }
-
-  late UserService service;
-  List setData = [];
+  UserService service = UserService();
+  List<UserModel> user;
+  String selectedUser = "";
   var _dio = Dio();
   bool isBusy = false;
+  String handleEmail = "";
+  String handlePassword = "";
+  String handleUsername = "";
+  String inputNumber = "";
 
-  Future getDataFromApi() async {
+  Future getDataUser() async {
     isBusy = true;
-    var result = await _dio.get("https://jsonplaceholder.typicode.com/users");
-    print("disini result ${result.data}");
-    setData = result.data;
+    update();
+    var response = await service.getUserData();
+    user = response;
     isBusy = false;
     update();
   }
 
-  Future postDataToApi({String? email, String? password}) async {
-    var result = await _dio.post("http://23.20.237.176:8000/auth/login",
-        data: {"email": email, "password": password});
-    return result;
+  setUser(String value) {
+    selectedUser = value;
+  }
+
+  emailUser(String email) {
+    handleEmail = email;
+  }
+
+  passwordUser(String password) {
+    handlePassword = password;
+  }
+
+  usernameUser(String username) {
+    handleUsername = username;
+  }
+
+  handleInputNumber(String value) {
+    inputNumber = value;
+    update();
+  }
+
+  userLog(BuildContext context) async {
+    var result =
+        await service.userLog(email: handleEmail, password: handlePassword);
+    if (result.statusCode == 200) {
+      getDataUser();
+      Get.off(MyHomePage(viewModel: this));
+    } else {
+      Get.defaultDialog(
+        title: "Failed to Login",
+      );
+    }
   }
 }

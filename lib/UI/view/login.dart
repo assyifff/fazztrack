@@ -5,43 +5,26 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import '../viewModel/userViewModel.dart';
+import 'signup.dart';
 
 class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+  const login({Key key}) : super(key: key);
 
   @override
   State<login> createState() => _loginState();
 }
 
 class _loginState extends State<login> {
-  var inputUser = "";
-  UserViewModel postView = Get.put(UserViewModel());
+  UserViewModel controller = Get.put(UserViewModel());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<UserViewModel>(
-        builder: (state) {
+        builder: (viewModel) {
           return ListView(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Text(
-                    "ZWallet",
-                    style: TextStyle(
-                      color: Color(0xFF6379F4),
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(
-                    top: 105,
-                    bottom: 61,
-                  ),
-                )
-              ],
-            ),
+            head(),
+            //kotak login
             Container(
               height: 611,
               width: 375,
@@ -51,47 +34,9 @@ class _loginState extends State<login> {
               ),
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 20,
-                    ),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFF3A3D42),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 20,
-                        ),
-                        child: Text(
-                          "Login to your existing account to access",
-                          style: TextStyle(
-                            color: Color(0xFF3A3D42).withOpacity(0.6),
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Text(
-                          "all the features in ZWallet.",
-                          style: TextStyle(
-                            color: Color(0xFF3A3D42).withOpacity(0.6),
-                            fontSize: 16,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                  loginLabel(),
+                  textLabelLogin(),
+                  //textfield email
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
@@ -104,9 +49,13 @@ class _loginState extends State<login> {
                             hintStyle: TextStyle(
                               color: Color(0xFFA9A9A9CC).withOpacity(0.8),
                             )),
+                        onChanged: (value) {
+                          viewModel.emailUser(value);
+                        },
                       ),
                     ),
                   ),
+                  //textfield password
                   Padding(
                     padding: EdgeInsets.all(16),
                     child: TextFormField(
@@ -123,10 +72,13 @@ class _loginState extends State<login> {
                         ),
                         counterText: "Forgot password?",
                       ),
-                      obscuringCharacter: '*',
                       obscureText: true,
+                      onChanged: (value) {
+                        viewModel.passwordUser(value);
+                      },
                     ),
                   ),
+                  //button login
                   Container(
                     margin: EdgeInsets.only(top: 50),
                     width: 343,
@@ -138,16 +90,7 @@ class _loginState extends State<login> {
                       builder: (modelView) {
                         return ElevatedButton(
                           onPressed: () async {
-                            var res = await postView.postDataToApi(
-                                email: "lukmanssefriyanto@gmail.com",
-                                password: "test123456");
-                            if (res.statusCode == 200) {
-                              Get.offNamed('/homePage');
-                            } else {
-                              AlertDialog(
-                                title: Text("Failed login"),
-                              );
-                            }
+                            viewModel.userLog(context);
                           },
                           child: Text(
                             "Login",
@@ -164,29 +107,7 @@ class _loginState extends State<login> {
                       },
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 25),
-                        child: Text("Don't have an account? Let's "),
-                      ),
-                      InkWell(
-                        onTap: (() {
-                          Get.toNamed("/signIn");
-                        }),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 25),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Color(0xFF6379F4),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                  signUpText(),
                 ],
               ),
             )
@@ -195,4 +116,99 @@ class _loginState extends State<login> {
       ),
     );
   }
+}
+
+Widget head() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+        child: Text(
+          "ZWallet",
+          style: TextStyle(
+            color: Color(0xFF6379F4),
+            fontSize: 26,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        margin: EdgeInsets.only(
+          top: 105,
+          bottom: 61,
+        ),
+      )
+    ],
+  );
+}
+
+Widget loginLabel() {
+  return Container(
+    margin: EdgeInsets.only(
+      top: 20,
+    ),
+    child: Text(
+      "Login",
+      style: TextStyle(
+        fontSize: 24,
+        color: Color(0xFF3A3D42),
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+  );
+}
+
+Widget textLabelLogin() {
+  return Column(
+    children: [
+      Container(
+        margin: EdgeInsets.only(
+          top: 20,
+        ),
+        child: Text(
+          "Login to your existing account to access",
+          style: TextStyle(
+            color: Color(0xFF3A3D42).withOpacity(0.6),
+            fontSize: 16,
+          ),
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(
+          top: 10,
+        ),
+        child: Text(
+          "all the features in ZWallet.",
+          style: TextStyle(
+            color: Color(0xFF3A3D42).withOpacity(0.6),
+            fontSize: 16,
+          ),
+        ),
+      )
+    ],
+  );
+}
+
+Widget signUpText() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+        margin: EdgeInsets.only(top: 25),
+        child: Text("Don't have an account? Let's "),
+      ),
+      InkWell(
+        onTap: (() {
+          Get.off(signUp());
+        }),
+        child: Container(
+          margin: EdgeInsets.only(top: 25),
+          child: Text(
+            "Sign Up",
+            style: TextStyle(
+              color: Color(0xFF6379F4),
+            ),
+          ),
+        ),
+      )
+    ],
+  );
 }
