@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:fazztrack_batch1/UI/view/MyHomePage.dart';
-import 'package:fazztrack_batch1/UI/view/login.dart';
 import 'package:fazztrack_batch1/core/model/userModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -10,7 +8,6 @@ class UserViewModel extends GetxController {
   UserService service = UserService();
   List<UserModel> user;
   String selectedUser = "";
-  var _dio = Dio();
   bool isBusy = false;
   String handleEmail = "";
   String handlePassword = "";

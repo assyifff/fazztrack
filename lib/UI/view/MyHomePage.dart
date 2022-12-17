@@ -1,10 +1,5 @@
-import 'dart:ffi';
-import 'dart:ui';
-import 'package:dio/dio.dart';
 import 'package:fazztrack_batch1/UI/viewModel/userViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'SecondPage.dart';
 

@@ -1,8 +1,5 @@
-import 'package:fazztrack_batch1/UI/view/MyHomePage.dart';
 import 'package:fazztrack_batch1/UI/viewModel/userViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import '../viewModel/userViewModel.dart';
 import 'signup.dart';
@@ -205,6 +202,7 @@ Widget signUpText() {
             "Sign Up",
             style: TextStyle(
               color: Color(0xFF6379F4),
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),

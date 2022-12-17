@@ -2,10 +2,7 @@ import 'package:fazztrack_batch1/UI/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'UI/view/MyHomePage.dart';
-import 'UI/view/SecondPage.dart';
 import 'UI/view/login.dart';
-import 'UI/view/signup.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
